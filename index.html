@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Open Greens — Golf Membership, Reimagined</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #F5F2EC;
+      --white: #FAFAF8;
+      --green-deep: #1C2B1E;
+      --green-mid: #2D4A30;
+      --green-muted: #4A6741;
+      --green-light: #8FAF7E;
+      --green-pale: #D4E4C8;
+      --gold: #C9A84C;
+      --gold-light: #E8D5A3;
+      --text-dark: #1A1A18;
+      --text-mid: #4A4A42;
+      --text-light: #8A8A80;
+      --border: rgba(28,43,30,0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.5rem 3rem;
+      background: rgba(245,242,236,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--green-deep);
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-cta {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--green-deep);
+      text-decoration: none;
+      padding: 0.6rem 1.4rem;
+      border: 1px solid var(--green-deep);
+      border-radius: 2px;
+      transition: all 0.25s;
+    }
+    .nav-cta:hover { background: var(--green-deep); color: var(--cream); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6rem 4rem 6rem 5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.2s;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 5vw, 5rem);
+      font-weight: 300;
+      line-height: 1.05;
+      color: var(--green-deep);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.4s;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--green-muted);
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--text-mid);
+      max-width: 420px;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.6s;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.8s;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--green-deep);
+      color: var(--cream);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 1rem 2.2rem;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: all 0.3s;
+      border: none; cursor: pointer;
+    }
+    .btn-primary:hover { background: var(--green-mid); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(28,43,30,0.2); }
+
+    .hero-note {
+      font-size: 0.78rem;
+      color: var(--text-light);
+      font-style: italic;
+    }
+
+    /* Hero right — visual panel */
+    .hero-right {
+      position: relative;
+      background: var(--green-deep);
+      overflow: hidden;
+    }
+
+    .hero-visual-overlay {
+      position: absolute; inset: 0;
+      background: 
+        radial-gradient(ellipse at 30% 40%, rgba(77,107,65,0.4) 0%, transparent 60%),
+        radial-gradient(ellipse at 70% 70%, rgba(201,168,76,0.15) 0%, transparent 50%);
+    }
+
+    /* Decorative golf course lines SVG */
+    .hero-svg {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      opacity: 0.18;
+    }
+
+    .hero-badge {
+      position: absolute;
+      bottom: 3rem; left: 3rem;
+      background: rgba(245,242,236,0.08);
+      border: 1px solid rgba(245,242,236,0.2);
+      backdrop-filter: blur(8px);
+      padding: 1.5rem 2rem;
+      border-radius: 4px;
+      color: var(--cream);
+      animation: fadeUp 1s ease forwards 1.2s;
+      opacity: 0;
+    }
+    .hero-badge-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem;
+      font-weight: 300;
+      line-height: 1;
+      color: var(--gold-light);
+    }
+    .hero-badge-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(245,242,236,0.6);
+      margin-top: 0.3rem;
+    }
+
+    .hero-flag {
+      position: absolute;
+      top: 3rem; right: 3rem;
+      width: 60px;
+      opacity: 0.6;
+    }
+
+    /* ── DIVIDER ── */
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--green-light), transparent);
+      margin: 0 5rem;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .how {
+      padding: 8rem 5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 3.5vw, 3.2rem);
+      font-weight: 300;
+      line-height: 1.15;
+      color: var(--green-deep);
+      margin-bottom: 1rem;
+    }
+    .section-title em { font-style: italic; color: var(--green-muted); }
+
+    .section-intro {
+      font-size: 0.95rem;
+      color: var(--text-mid);
+      line-height: 1.75;
+      max-width: 520px;
+      margin-bottom: 4rem;
+      font-weight: 300;
+    }
+
+    .how-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+    }
+
+    .step {
+      position: relative;
+      padding: 2.5rem;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .step:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(28,43,30,0.08); }
+
+    .step-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.5rem;
+      font-weight: 300;
+      color: var(--green-pale);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .step-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--green-deep);
+      margin-bottom: 0.75rem;
+    }
+
+    .step-desc {
+      font-size: 0.88rem;
+      color: var(--text-mid);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    .step-accent {
+      position: absolute;
+      top: 0; left: 2.5rem; right: 2.5rem;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      border-radius: 0 0 2px 2px;
+    }
+
+    /* ── SIGNUP SECTION ── */
+    .signup-section {
+      background: var(--green-deep);
+      padding: 8rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .signup-bg {
+      position: absolute; inset: 0;
+      background: 
+        radial-gradient(ellipse at 80% 50%, rgba(77,107,65,0.3) 0%, transparent 60%),
+        radial-gradient(ellipse at 10% 80%, rgba(201,168,76,0.1) 0%, transparent 40%);
+    }
+
+    .signup-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 6rem;
+      align-items: start;
+      position: relative; z-index: 1;
+    }
+
+    .signup-left .section-label { color: var(--gold); }
+
+    .signup-left .section-title { color: var(--cream); }
+    .signup-left .section-title em { color: var(--green-light); }
+
+    .signup-left p {
+      font-size: 0.92rem;
+      color: rgba(245,242,236,0.65);
+      line-height: 1.75;
+      font-weight: 300;
+      margin-bottom: 2rem;
+    }
+
+    .signup-stats {
+      display: flex;
+      gap: 2.5rem;
+    }
+    .stat-item { }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      color: var(--gold-light);
+    }
+    .stat-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(245,242,236,0.45);
+      margin-top: 0.2rem;
+    }
+
+    /* ── FORM ── */
+    .form-card {
+      background: var(--cream);
+      border-radius: 6px;
+      padding: 3rem;
+    }
+
+    .form-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--green-deep);
+      margin-bottom: 0.4rem;
+    }
+
+    .form-subtitle {
+      font-size: 0.82rem;
+      color: var(--text-light);
+      margin-bottom: 2rem;
+      font-weight: 300;
+    }
+
+    .form-row { margin-bottom: 1.2rem; }
+
+    .form-row label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      margin-bottom: 0.45rem;
+    }
+    .form-row label .req { color: var(--gold); margin-left: 2px; }
+    .form-row label .opt {
+      font-size: 0.65rem;
+      color: var(--text-light);
+      letter-spacing: 0.05em;
+      text-transform: none;
+      font-weight: 300;
+      margin-left: 4px;
+    }
+
+    .form-row input,
+    .form-row select,
+    .form-row textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      color: var(--text-dark);
+      font-weight: 300;
+      transition: border-color 0.2s;
+      outline: none;
+      appearance: none;
+    }
+    .form-row input:focus,
+    .form-row select:focus,
+    .form-row textarea:focus {
+      border-color: var(--green-muted);
+    }
+
+    .form-row select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234A6741' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+      cursor: pointer;
+    }
+
+    .form-two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 1.8rem 0;
+    }
+
+    .form-optional-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .form-optional-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .checkbox-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.82rem;
+      color: var(--text-mid);
+      cursor: pointer;
+      font-weight: 300;
+    }
+    .checkbox-item input[type="checkbox"] {
+      width: 16px; height: 16px;
+      padding: 0;
+      cursor: pointer;
+      accent-color: var(--green-muted);
+    }
+
+    .form-row textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .form-submit {
+      width: 100%;
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: var(--green-deep);
+      color: var(--cream);
+      border: none;
+      border-radius: 2px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .form-submit:hover { background: var(--green-mid); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(28,43,30,0.25); }
+
+    .form-privacy {
+      font-size: 0.72rem;
+      color: var(--text-light);
+      text-align: center;
+      margin-top: 1rem;
+      font-weight: 300;
+      font-style: italic;
+    }
+
+    /* ── SUCCESS STATE ── */
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 3rem 2rem;
+    }
+    .form-success.visible { display: block; }
+    .success-icon {
+      width: 56px; height: 56px;
+      background: var(--green-pale);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-size: 1.5rem;
+    }
+    .success-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 300;
+      color: var(--green-deep);
+      margin-bottom: 0.75rem;
+    }
+    .success-sub {
+      font-size: 0.88rem;
+      color: var(--text-mid);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    /* ── FAQ ── */
+    .faq {
+      padding: 8rem 5rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .faq-header { text-align: center; margin-bottom: 4rem; }
+
+    .faq-list { display: flex; flex-direction: column; gap: 0; }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .faq-question {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 0;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--green-deep);
+      gap: 1rem;
+    }
+
+    .faq-icon {
+      flex-shrink: 0;
+      width: 24px; height: 24px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem;
+      color: var(--green-muted);
+      transition: all 0.25s;
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+    }
+    .faq-answer p {
+      font-size: 0.9rem;
+      color: var(--text-mid);
+      line-height: 1.75;
+      font-weight: 300;
+      padding-bottom: 1.5rem;
+    }
+
+    .faq-item.open .faq-icon {
+      background: var(--green-deep);
+      border-color: var(--green-deep);
+      color: var(--cream);
+      transform: rotate(45deg);
+    }
+    .faq-item.open .faq-answer { max-height: 300px; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--green-deep);
+      padding: 3rem 5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(245,242,236,0.1);
+    }
+
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--cream);
+      letter-spacing: 0.04em;
+    }
+    .footer-logo span { color: var(--gold); }
+
+    .footer-copy {
+      font-size: 0.78rem;
+      color: rgba(245,242,236,0.35);
+      font-weight: 300;
+    }
+
+    .footer-tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.9rem;
+      font-style: italic;
+      color: rgba(245,242,236,0.45);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { min-height: 300px; }
+      .hero-left { padding: 4rem 1.5rem; }
+      .how { padding: 5rem 1.5rem; }
+      .how-steps { grid-template-columns: 1fr; }
+      .signup-section { padding: 5rem 1.5rem; }
+      .signup-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .faq { padding: 5rem 1.5rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 1.5rem; }
+      .section-divider { margin: 0 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">Open<span>Greens</span></div>
+    <a href="#register" class="nav-cta">Register Interest</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Golf membership, reimagined</p>
+      <h1 class="hero-title">One membership.<br><em>Every course.</em></h1>
+      <p class="hero-sub">Open Greens is building a new kind of golf membership — flexible, modern, and designed for how today's golfer actually plays. No club ties. No restrictions. Just great golf.</p>
+      <div class="hero-actions">
+        <a href="#register" class="btn-primary">Register Your Interest</a>
+        <span class="hero-note">Free to join the waitlist</span>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-visual-overlay"></div>
+      <svg class="hero-svg" viewBox="0 0 600 800" xmlns="http://www.w3.org/2000/svg">
+        <!-- Abstract golf course contours -->
+        <ellipse cx="300" cy="600" rx="280" ry="120" fill="none" stroke="#F5F2EC" stroke-width="1"/>
+        <ellipse cx="300" cy="600" rx="220" ry="90" fill="none" stroke="#F5F2EC" stroke-width="0.8"/>
+        <ellipse cx="300" cy="600" rx="160" ry="60" fill="none" stroke="#F5F2EC" stroke-width="0.6"/>
+        <ellipse cx="300" cy="600" rx="100" ry="35" fill="none" stroke="#F5F2EC" stroke-width="0.5"/>
+        <line x1="300" y1="0" x2="300" y2="500" stroke="#F5F2EC" stroke-width="0.5" stroke-dasharray="4,8"/>
+        <circle cx="300" cy="500" r="6" fill="#C9A84C" opacity="0.6"/>
+        <!-- Flag -->
+        <line x1="300" y1="430" x2="300" y2="500" stroke="#F5F2EC" stroke-width="1.5"/>
+        <polygon points="300,430 328,445 300,460" fill="#C9A84C" opacity="0.7"/>
+        <!-- Fairway curves -->
+        <path d="M 100 100 Q 200 300 300 500" fill="none" stroke="#F5F2EC" stroke-width="0.4" opacity="0.5"/>
+        <path d="M 500 100 Q 400 300 300 500" fill="none" stroke="#F5F2EC" stroke-width="0.4" opacity="0.5"/>
+        <path d="M 50 400 Q 150 450 300 500" fill="none" stroke="#F5F2EC" stroke-width="0.4" opacity="0.4"/>
+        <path d="M 550 400 Q 450 450 300 500" fill="none" stroke="#F5F2EC" stroke-width="0.4" opacity="0.4"/>
+      </svg>
+      <div class="hero-badge">
+        <div class="hero-badge-num">18+</div>
+        <div class="hero-badge-label">Courses planned at launch</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- HOW IT WORKS -->
+  <section class="how" id="how">
+    <p class="section-label">The concept</p>
+    <h2 class="section-title">How <em>Open Greens</em> works</h2>
+    <p class="section-intro">Traditional club memberships lock you in. We're building something different — a single membership that moves with you.</p>
+    <div class="how-steps">
+      <div class="step">
+        <div class="step-accent"></div>
+        <div class="step-num">01</div>
+        <div class="step-title">Join once</div>
+        <p class="step-desc">One membership, one monthly fee. No joining fees, no hidden costs, no long-term commitments locking you in.</p>
+      </div>
+      <div class="step">
+        <div class="step-accent"></div>
+        <div class="step-num">02</div>
+        <div class="step-title">Play anywhere</div>
+        <p class="step-desc">Access a curated network of partner courses across your region. Book rounds directly through the Open Greens app.</p>
+      </div>
+      <div class="step">
+        <div class="step-accent"></div>
+        <div class="step-num">03</div>
+        <div class="step-title">Play your way</div>
+        <p class="step-desc">Choose a tier that fits your game. Whether you're a weekend player or out every week, there's a plan for you.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- REGISTER / SIGNUP -->
+  <section class="signup-section" id="register">
+    <div class="signup-bg"></div>
+    <div class="signup-inner">
+      <div class="signup-left">
+        <p class="section-label">Early access</p>
+        <h2 class="section-title">Be first<br><em>on the tee.</em></h2>
+        <p>We're building Open Greens from the ground up — and the courses we partner with, the features we build, and the plans we offer will be shaped by golfers like you. Register your interest and help us get it right.</p>
+        <div class="signup-stats">
+          <div class="stat-item">
+            <div class="stat-num">100%</div>
+            <div class="stat-label">Free to register</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">0</div>
+            <div class="stat-label">Spam. Ever.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <div id="formContent">
+          <div class="form-title">Register your interest</div>
+          <div class="form-subtitle">Takes less than 2 minutes · No commitment required</div>
+
+          <!-- Required fields -->
+          <div class="form-two-col">
+            <div class="form-row">
+              <label>First name <span class="req">*</span></label>
+              <input type="text" id="firstName" placeholder="James" />
+            </div>
+            <div class="form-row">
+              <label>Last name <span class="req">*</span></label>
+              <input type="text" id="lastName" placeholder="Anderson" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label>Email address <span class="req">*</span></label>
+            <input type="email" id="email" placeholder="james@example.com" />
+          </div>
+
+          <div class="form-row">
+            <label>Date of birth <span class="req">*</span></label>
+            <input type="date" id="dob" />
+          </div>
+
+          <hr class="form-divider">
+          <div class="form-optional-label">Optional — help us shape the product</div>
+
+          <div class="form-row">
+            <label>How often do you play? <span class="opt">(optional)</span></label>
+            <select id="frequency">
+              <option value="">Select an option</option>
+              <option>Once a week or more</option>
+              <option>2–3 times a month</option>
+              <option>Once a month</option>
+              <option>A few times a year</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label>Which courses would you want access to? <span class="opt">(optional)</span></label>
+            <select id="courses">
+              <option value="">Select a course</option>
+              <optgroup label="Surrey & South London">
+                <option>Walton Heath Golf Club</option>
+                <option>Wentworth Club</option>
+                <option>St George's Hill Golf Club</option>
+                <option>Burhill Golf Club</option>
+                <option>Tyrrells Wood Golf Club</option>
+                <option>Tandridge Golf Club</option>
+              </optgroup>
+              <optgroup label="North London & Hertfordshire">
+                <option>Moor Park Golf Club</option>
+                <option>Brickendon Grange Golf Club</option>
+                <option>East Herts Golf Club</option>
+                <option>Stocks Hotel Golf Club</option>
+              </optgroup>
+              <optgroup label="Kent">
+                <option>Chart Hills Golf Club</option>
+                <option>London Golf Club</option>
+                <option>Nizels Golf & Country Club</option>
+                <option>Knole Park Golf Club</option>
+              </optgroup>
+              <optgroup label="Essex">
+                <option>Hanbury Manor Golf Club</option>
+                <option>Brocket Hall Golf Club</option>
+                <option>The Hanbury Manor Marriott</option>
+              </optgroup>
+              <option value="other">Other / I'll suggest in comments</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label>What membership features matter most to you? <span class="opt">(optional)</span></label>
+            <div class="checkbox-group">
+              <label class="checkbox-item"><input type="checkbox" value="flexible-booking"> Flexible booking</label>
+              <label class="checkbox-item"><input type="checkbox" value="guest-passes"> Guest passes</label>
+              <label class="checkbox-item"><input type="checkbox" value="handicap-tracking"> Handicap tracking</label>
+              <label class="checkbox-item"><input type="checkbox" value="social-events"> Social events</label>
+              <label class="checkbox-item"><input type="checkbox" value="coaching"> Coaching access</label>
+              <label class="checkbox-item"><input type="checkbox" value="range-access"> Driving range access</label>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label>Anything else you'd like to tell us? <span class="opt">(optional)</span></label>
+            <textarea id="comments" placeholder="Courses you'd love to see, features you can't live without, frustrations with current memberships..."></textarea>
+          </div>
+
+          <button class="form-submit" onclick="handleSubmit()">Register My Interest →</button>
+          <p class="form-privacy">Your details are used only to contact you about Open Greens. Never shared.</p>
+        </div>
+
+        <div class="form-success" id="formSuccess">
+          <div class="success-icon">⛳</div>
+          <div class="success-title">You're on the list.</div>
+          <p class="success-sub">Thanks for registering your interest in Open Greens. We'll be in touch as things develop — and your feedback will genuinely shape what we build.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq" id="faq">
+    <div class="faq-header">
+      <p class="section-label">Questions</p>
+      <h2 class="section-title">Things you might<br><em>want to know</em></h2>
+    </div>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Is this a real membership I can buy right now?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Not yet — Open Greens is currently in its early development phase. Registering your interest puts you on our early access list and, importantly, helps us understand where demand is and which courses to partner with first.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Does registering cost anything?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Absolutely not. Registering is completely free and carries zero commitment. We're at the stage of validating the idea — your registration helps us understand whether there's genuine demand before we build further.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          How will the multi-course membership work?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>The model we're building toward is a single monthly or annual fee that gives you access to a network of partner courses. You'll book rounds through an app, with different membership tiers offering different levels of access and rounds per month. The specifics — including pricing — will be shaped by what we learn from early registrations like yours.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Which area are you launching in first?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>We're starting with courses in and around London and the South East. The course wishlist data we collect from registrations will directly influence which clubs we approach first — so your input genuinely matters.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          I manage or own a golf course — can we get involved?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>We'd love to hear from you. Use the registration form and mention it in the comments field — or reach out directly. Course partnerships are central to what we're building and we're actively looking for forward-thinking clubs who want to reach a new generation of golfers.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Open<span>Greens</span></div>
+    <div class="footer-tagline">Golf for a new generation</div>
+    <div class="footer-copy">© 2025 Open Greens. All rights reserved.</div>
+  </footer>
+
+  <script>
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    }
+
+    function handleSubmit() {
+      const firstName = document.getElementById('firstName').value.trim();
+      const lastName = document.getElementById('lastName').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const dob = document.getElementById('dob').value;
+
+      if (!firstName || !lastName || !email || !dob) {
+        alert('Please fill in all required fields (name, email, and date of birth).');
+        return;
+      }
+      if (!email.includes('@')) {
+        alert('Please enter a valid email address.');
+        return;
+      }
+
+      // In future: send to backend API here
+      console.log('Registration:', { firstName, lastName, email, dob });
+
+      document.getElementById('formContent').style.display = 'none';
+      document.getElementById('formSuccess').classList.add('visible');
+    }
+  </script>
+
+</body>
+</html>
