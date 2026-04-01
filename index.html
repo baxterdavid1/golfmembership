@@ -338,6 +338,7 @@
       display: flex;
       gap: 2.5rem;
     }
+    .stat-item { }
     .stat-num {
       font-family: 'Cormorant Garamond', serif;
       font-size: 2rem;
@@ -667,9 +668,9 @@
   <!-- HERO -->
   <section class="hero">
     <div class="hero-left">
-      <p class="hero-eyebrow">Hampshire & the Solent · Multi-course membership</p>
+      <p class="hero-eyebrow">Solent & South Coast · Multi-course membership</p>
       <h1 class="hero-title">One membership.<br><em>More golf.</em></h1>
-      <p class="hero-sub">Open Greens is building a flexible golf membership across Hampshire and the Solent — working alongside great local clubs to give you access to more courses, on your schedule, at a pace that suits how you play.</p>
+      <p class="hero-sub">Open Greens is building a flexible golf membership across the Solent and South Coast — working alongside great local clubs to give you access to more courses, on your schedule, at a pace that suits how you play.</p>
       <div class="hero-actions">
         <a href="#register" class="btn-primary">Register Your Interest</a>
         <span class="hero-note">Free to join the waitlist</span>
@@ -695,8 +696,8 @@
         <path d="M 500 100 Q 400 300 300 500" fill="none" stroke="#F5F2EC" stroke-width="0.4" opacity="0.5"/>
       </svg>
       <div class="hero-badge">
-        <div class="hero-badge-num">Hampshire</div>
-        <div class="hero-badge-label">Launching across the Solent</div>
+        <div class="hero-badge-num">Solent</div>
+        <div class="hero-badge-label">& South Coast</div>
       </div>
     </div>
   </section>
@@ -742,8 +743,8 @@
     <div style="position:absolute;inset:0;background:linear-gradient(to right, rgba(28,43,30,0.55) 0%, rgba(28,43,30,0.2) 50%, rgba(28,43,30,0.55) 100%);"></div>
     <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;">
       <div>
-        <p style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem,3vw,2.6rem);font-weight:300;color:#F5F2EC;font-style:italic;letter-spacing:0.02em;text-shadow:0 2px 20px rgba(0,0,0,0.3);">Hampshire's courses deserve to be played.</p>
-        <p style="font-size:0.78rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(245,242,236,0.6);margin-top:0.8rem;">Open Greens · Launching across the Solent</p>
+        <p style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem,3vw,2.6rem);font-weight:300;color:#F5F2EC;font-style:italic;letter-spacing:0.02em;text-shadow:0 2px 20px rgba(0,0,0,0.3);">The South Coast has some of England's finest golf.</p>
+        <p style="font-size:0.78rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(245,242,236,0.6);margin-top:0.8rem;">Open Greens · Solent & South Coast</p>
       </div>
     </div>
   </div>
@@ -813,7 +814,7 @@
             <label>Which courses would you want access to? <span class="opt">(optional)</span></label>
             <select id="courses">
               <option value="">Select a course</option>
-              <optgroup label="Southampton & Surrounding">
+              <optgroup label="Southampton & Surrounds">
                 <option>Southampton City Golf Course</option>
                 <option>Chilworth Golf Club</option>
                 <option>Romsey Golf Club</option>
@@ -826,12 +827,19 @@
                 <option>New Forest Golf Club</option>
                 <option>Brockenhurst Manor Golf Club</option>
               </optgroup>
-              <optgroup label="Portsmouth & Isle of Wight">
+              <optgroup label="Portsmouth, Hayling Island & Isle of Wight">
                 <option>Portsmouth Golf Centre</option>
                 <option>Waterlooville Golf Club</option>
+                <option>Hayling Golf Club</option>
                 <option>Cowes Golf Club (IoW)</option>
                 <option>Freshwater Bay Golf Club (IoW)</option>
                 <option>Shanklin & Sandown Golf Club (IoW)</option>
+              </optgroup>
+              <optgroup label="Chichester & West Sussex Coast">
+                <option>Chichester Golf Club</option>
+                <option>Goodwood Golf Club</option>
+                <option>Selsey Golf Club</option>
+                <option>Bognor Regis Golf Club</option>
               </optgroup>
               <optgroup label="Winchester & North Hampshire">
                 <option>Royal Winchester Golf Club</option>
@@ -874,7 +882,15 @@
   </section>
 
   <!-- FAQ -->
-  <section class="faq" id="faq">
+  <section class="faq" id="faq" style="position:relative;">
+    <div style="position:absolute;inset:0;z-index:0;overflow:hidden;">
+      <img 
+        src="https://images.unsplash.com/photo-1592919505780-303950717480?w=1600&q=80"
+        alt=""
+        style="width:100%;height:100%;object-fit:cover;object-position:center;opacity:0.07;"
+      />
+    </div>
+    <div style="position:relative;z-index:1;">
     <div class="faq-header">
       <p class="section-label">Questions</p>
       <h2 class="section-title">Things you might<br><em>want to know</em></h2>
@@ -917,7 +933,7 @@
           <span class="faq-icon">+</span>
         </button>
         <div class="faq-answer">
-          <p>We're starting with courses across Hampshire and the Solent — from Southampton and the New Forest through to Portsmouth and the Isle of Wight. The course wishlist data we collect from registrations will directly influence which clubs we approach first, so your input genuinely matters.</p>
+          <p>We're starting with courses across the Solent and South Coast — from Southampton and the New Forest, through Portsmouth and Hayling Island, across to the Isle of Wight and eastward toward Chichester. The course wishlist data we collect from registrations will directly influence which clubs we approach first, so your input genuinely matters.</p>
         </div>
       </div>
 
@@ -934,10 +950,9 @@
   </section>
 
   <!-- FOOTER -->
-  <footer>
     <div class="footer-logo">Open<span>Greens</span></div>
     <div class="footer-tagline">More courses. More golf.</div>
-    <div class="footer-copy">© 2025 Open Greens. All rights reserved.</div>
+    <div class="footer-copy">© 2026 Open Greens. All rights reserved.</div>
   </footer>
 
   <script>
