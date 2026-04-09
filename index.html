@@ -414,33 +414,63 @@
       if (!isOpen) item.classList.add('open');
     }
 
-    function handleSubmit() {
-      const firstName = document.getElementById('firstName').value.trim();
-      const lastName = document.getElementById('lastName').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const dob = document.getElementById('dob').value;
-      const consentRequired = document.getElementById('consentRequired').checked;
-      const consentMarketing = document.getElementById('consentMarketing').checked;
+  async function handleSubmit() {
+  const firstName = document.getElementById('firstName').value.trim();
+  const lastName = document.getElementById('lastName').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const dob = document.getElementById('dob').value;
+  const consentRequired = document.getElementById('consentRequired').checked;
+  const consentMarketing = document.getElementById('consentMarketing').checked;
 
-      if (!firstName || !lastName || !email || !dob) {
-        alert('Please fill in all required fields (name, email, and date of birth).');
-        return;
-      }
-      if (!email.includes('@')) {
-        alert('Please enter a valid email address.');
-        return;
-      }
-      if (!consentRequired) {
-        alert('Please confirm you have read the Privacy Policy and agree to be contacted about Open Greens.');
-        return;
-      }
+  // Validation
+  if (!firstName || !lastName || !email || !dob) {
+    alert('Please fill in all required fields (name, email, and date of birth).');
+    return;
+  }
+  if (!email.includes('@')) {
+    alert('Please enter a valid email address.');
+    return;
+  }
+  if (!consentRequired) {
+    alert('Please confirm you have read the Privacy Policy and agree to be contacted about Open Greens.');
+    return;
+  }
 
-      // In future: send to backend API here
-      console.log('Registration:', { firstName, lastName, email, dob, consentMarketing });
+  // Disable button to prevent double submission
+  const btn = document.querySelector('.form-submit');
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
 
-      document.getElementById('formContent').style.display = 'none';
-      document.getElementById('formSuccess').classList.add('visible');
-    }
+  try {
+    const response = await fetch('https://mw3fm2l2i3.execute-api.eu-west-2.amazonaws.com/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email,
+        firstName,
+        lastName,
+        dob,
+        frequency: document.getElementById('frequency').value,
+        courses: document.getElementById('courses').value,
+        comments: document.getElementById('comments').value,
+        features: Array.from(document.querySelectorAll('.checkbox-group input:checked')).map(cb => cb.value),
+        consentMarketing
+      })
+    });
+
+    if (!response.ok) throw new Error('Submission failed');
+
+    // Show success state
+    document.getElementById('formContent').style.display = 'none';
+    document.getElementById('formSuccess').classList.add('visible');
+
+  } catch (error) {
+    console.error('Submission error:', error);
+    alert('Something went wrong submitting your registration. Please try again.');
+    btn.disabled = false;
+    btn.textContent = 'Register My Interest →';
+  }
+}
   </script>
 
 </body>
