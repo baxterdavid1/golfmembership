@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+   <link rel="icon" type="image/x-icon" href="/favicon.png">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -41,7 +42,6 @@
     .hero-note { font-size: 0.78rem; color: var(--text-light); font-style: italic; }
     .hero-right { position: relative; background: var(--green-deep); overflow: hidden; }
     .hero-visual-overlay { position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 40%, rgba(77,107,65,0.4) 0%, transparent 60%), radial-gradient(ellipse at 70% 70%, rgba(201,168,76,0.15) 0%, transparent 50%); }
-    .hero-svg { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.18; }
     .hero-badge { position: absolute; bottom: 3rem; left: 3rem; background: rgba(245,242,236,0.08); border: 1px solid rgba(245,242,236,0.2); backdrop-filter: blur(8px); padding: 1.5rem 2rem; border-radius: 4px; color: var(--cream); animation: fadeUp 1s ease forwards 1.2s; opacity: 0; }
     .hero-badge-num { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 300; line-height: 1; color: var(--gold-light); }
     .hero-badge-label { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(245,242,236,0.6); margin-top: 0.3rem; }
@@ -94,7 +94,13 @@
     .dob-group select { width: 100%; padding: 0.75rem 1rem; background: var(--white); border: 1px solid var(--border); border-radius: 2px; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; color: var(--text-dark); font-weight: 300; transition: border-color 0.2s; outline: none; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234A6741' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.75rem center; padding-right: 2rem; cursor: pointer; }
     .dob-group select:focus { border-color: var(--green-muted); }
     .form-row textarea { resize: vertical; min-height: 80px; }
-
+    .courses-scroll { max-height: 220px; overflow-y: auto; background: var(--white); border: 1px solid var(--border); border-radius: 2px; padding: 0.75rem 1rem; scrollbar-width: thin; scrollbar-color: var(--green-light) transparent; }
+    .courses-scroll::-webkit-scrollbar { width: 4px; }
+    .courses-scroll::-webkit-scrollbar-track { background: transparent; }
+    .courses-scroll::-webkit-scrollbar-thumb { background: var(--green-light); border-radius: 2px; }
+    .courses-region-header { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin: 0.8rem 0 0.4rem; padding-bottom: 0.3rem; border-bottom: 1px solid var(--border); }
+    .courses-region-header:first-child { margin-top: 0; }
+    .courses-note { font-size: 0.75rem; color: var(--text-light); font-weight: 300; font-style: italic; margin-bottom: 0.5rem; }
     .consent-block { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
     .consent-item { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.8rem; color: var(--text-mid); font-weight: 300; line-height: 1.6; cursor: pointer; }
     .consent-item input[type="checkbox"] { width: 16px; height: 16px; margin-top: 2px; flex-shrink: 0; cursor: pointer; accent-color: var(--green-muted); }
@@ -102,12 +108,10 @@
     .consent-item a:hover { color: var(--green-deep); }
     .consent-required { font-weight: 400; }
     .req { color: var(--gold); }
-
     .form-submit { width: 100%; margin-top: 1.5rem; padding: 1rem; background: var(--green-deep); color: var(--cream); border: none; border-radius: 2px; font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
     .form-submit:hover { background: var(--green-mid); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(28,43,30,0.25); }
     .form-privacy { font-size: 0.72rem; color: var(--text-light); text-align: center; margin-top: 1rem; font-weight: 300; font-style: italic; }
     .form-privacy a { color: var(--green-muted); }
-
     .form-success { display: none; text-align: center; padding: 3rem 2rem; }
     .form-success.visible { display: block; }
     .success-icon { width: 56px; height: 56px; background: var(--green-pale); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 1.5rem; }
@@ -307,44 +311,45 @@
           </div>
 
           <div class="form-row">
-            <label>Which courses would you want access to? <span class="opt">(optional)</span></label>
-            <select id="courses">
-              <option value="">Select a course</option>
-              <optgroup label="Southampton & Surrounds">
-                <option>Southampton City Golf Course</option>
-                <option>Chilworth Golf Club</option>
-                <option>Romsey Golf Club</option>
-                <option>Stoneham Golf Club</option>
-                <option>Fleming Park Golf Course</option>
-              </optgroup>
-              <optgroup label="New Forest">
-                <option>Burley Golf Club</option>
-                <option>Bramshaw Golf Club</option>
-                <option>New Forest Golf Club</option>
-                <option>Brockenhurst Manor Golf Club</option>
-              </optgroup>
-              <optgroup label="Portsmouth, Hayling Island & Isle of Wight">
-                <option>Portsmouth Golf Centre</option>
-                <option>Waterlooville Golf Club</option>
-                <option>Hayling Golf Club</option>
-                <option>Cowes Golf Club (IoW)</option>
-                <option>Freshwater Bay Golf Club (IoW)</option>
-                <option>Shanklin & Sandown Golf Club (IoW)</option>
-              </optgroup>
-              <optgroup label="Chichester & West Sussex Coast">
-                <option>Chichester Golf Club</option>
-                <option>Goodwood Golf Club</option>
-                <option>Selsey Golf Club</option>
-                <option>Bognor Regis Golf Club</option>
-              </optgroup>
-              <optgroup label="Winchester & North Hampshire">
-                <option>Royal Winchester Golf Club</option>
-                <option>Hockley Golf Club</option>
-                <option>Ampfield Golf Club</option>
-                <option>Leckford Golf Club</option>
-              </optgroup>
-              <option value="other">Other / I'll suggest in comments</option>
-            </select>
+            <label>Which courses would you want access to? <span class="opt">(optional — select all that apply)</span></label>
+            <p class="courses-note">Don't see your course? Add it in the comments below — this list isn't exhaustive.</p>
+            <div class="courses-scroll">
+              <div class="courses-region-header">Southampton & Surrounds</div>
+              <div class="checkbox-item"><input type="checkbox" id="c-southampton-city" value="Southampton City Golf Course"><label for="c-southampton-city">Southampton City Golf Course</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="c-chilworth" value="Chilworth Golf Club"><label for="c-chilworth">Chilworth Golf Club</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="c-romsey" value="Romsey Golf Club"><label for="c-romsey">Romsey Golf Club</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="c-stoneham" value="Stoneham Golf Club"><label for="c-stoneham">Stoneham Golf Club</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="c-fleming" value="Fleming Park Golf Course"><label for="c-fleming">Fleming Park Golf Course</label></div>
+
+              <div class="courses-region-header">New Forest</div>
+              <div class="checkbox-item"><input type="checkbox" id="c-burley" value="Burley Golf Club"><label for="c-burley">Burley Golf Club</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="c-bramshaw" value="Bramshaw Golf Club"><label for="c-bramshaw">Bramshaw Golf Club</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="c-newforest" value="New Forest Golf Club"><label for="c-newforest">New Forest Golf Club</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="c-brockenhurst" value="Brockenhurst Manor Golf Club"><label for="c-brockenhurst">Brockenhurst Manor Golf Club</label></div>
+
+              <div class="courses-region-header">Portsmouth, Hayling Island & Isle of Wight</div>
+              <div class="checkbox-item"><input type="checkbox" id="c-portsmouth" value="Portsmouth Golf Centre"><label for="c-portsmouth">Portsmouth Golf Centre</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="c-waterlooville" value="Waterlooville Golf Club"><label for="c-waterlooville">Waterlooville Golf Club</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="c-hayling" value="Hayling Golf Club"><label for="c-hayling">Hayling Golf Club</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="c-cams" value="Cams Hall Golf Club"><label for="c-cams">Cams Hall Golf Club</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="c-southwick" value="Southwick Park Golf Club"><label for="c-southwick">Southwick Park Golf Club</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="c-rowlands" value="Rowlands Castle Golf Club"><label for="c-rowlands">Rowlands Castle Golf Club</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="c-cowes" value="Cowes Golf Club (IoW)"><label for="c-cowes">Cowes Golf Club (IoW)</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="c-freshwater" value="Freshwater Bay Golf Club (IoW)"><label for="c-freshwater">Freshwater Bay Golf Club (IoW)</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="c-shanklin" value="Shanklin & Sandown Golf Club (IoW)"><label for="c-shanklin">Shanklin & Sandown Golf Club (IoW)</label></div>
+
+              <div class="courses-region-header">Chichester & West Sussex Coast</div>
+              <div class="checkbox-item"><input type="checkbox" id="c-chichester" value="Chichester Golf Club"><label for="c-chichester">Chichester Golf Club</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="c-goodwood" value="Goodwood Golf Club"><label for="c-goodwood">Goodwood Golf Club</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="c-selsey" value="Selsey Golf Club"><label for="c-selsey">Selsey Golf Club</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="c-bognor" value="Bognor Regis Golf Club"><label for="c-bognor">Bognor Regis Golf Club</label></div>
+
+              <div class="courses-region-header">Winchester & North Hampshire</div>
+              <div class="checkbox-item"><input type="checkbox" id="c-winchester" value="Royal Winchester Golf Club"><label for="c-winchester">Royal Winchester Golf Club</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="c-hockley" value="Hockley Golf Club"><label for="c-hockley">Hockley Golf Club</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="c-ampfield" value="Ampfield Golf Club"><label for="c-ampfield">Ampfield Golf Club</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="c-leckford" value="Leckford Golf Club"><label for="c-leckford">Leckford Golf Club</label></div>
+            </div>
           </div>
 
           <div class="form-row">
@@ -494,7 +499,7 @@
           body: JSON.stringify({
             email, firstName, lastName, dob,
             frequency: document.getElementById('frequency').value,
-            courses: document.getElementById('courses').value,
+            courses: Array.from(document.querySelectorAll('.courses-scroll input:checked')).map(cb => cb.value),
             comments: document.getElementById('comments').value,
             features: Array.from(document.querySelectorAll('.checkbox-group input:checked')).map(cb => cb.value),
             consentMarketing
