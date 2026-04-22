@@ -262,7 +262,7 @@
   <div class="section-divider"></div>
 
   <div style="position:relative;height:340px;overflow:hidden;margin:0;">
-    <img src="https://images.unsplash.com/photo-1535131749006-b7f58c99034b?w=1600&q=80" alt="Golf course landscape" style="width:100%;height:100%;object-fit:cover;object-position:center 60%;"/>
+    <img src="images/tee_shot.jpg" alt="Golf course landscape" style="width:100%;height:100%;object-fit:cover;object-position:center 60%;"/>
     <div style="position:absolute;inset:0;background:linear-gradient(to right, rgba(28,43,30,0.55) 0%, rgba(28,43,30,0.2) 50%, rgba(28,43,30,0.55) 100%);"></div>
     <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;">
       <div>
@@ -299,17 +299,17 @@
           <div class="form-two-col">
             <div class="form-row">
               <label>First name <span class="req">*</span></label>
-              <input type="text" id="firstName" placeholder="James" />
+              <input type="text" id="firstName" placeholder="Tiger" />
             </div>
             <div class="form-row">
               <label>Last name <span class="req">*</span></label>
-              <input type="text" id="lastName" placeholder="Anderson" />
+              <input type="text" id="lastName" placeholder="Woods" />
             </div>
           </div>
 
           <div class="form-row">
             <label>Email address <span class="req">*</span></label>
-            <input type="email" id="email" placeholder="james@example.com" />
+            <input type="email" id="email" placeholder="tigerwoods@golf.com" />
           </div>
 
           <div class="form-row">
@@ -343,6 +343,11 @@
 
           <hr class="form-divider">
           <div class="form-optional-label">Optional — help us shape the product</div>
+
+          <div class="form-row">
+            <label>Postcode <span class="opt">(optional — helps us prioritise courses in your area)</span></label>
+            <input type="text" id="postcode" placeholder="e.g. PO1 1AA" style="text-transform:uppercase;" maxlength="8" />
+          </div>
 
           <div class="form-row">
             <label>How often do you play? <span class="opt">(optional)</span></label>
@@ -470,7 +475,7 @@
 
   <section class="faq" id="faq" style="position:relative;">
     <div style="position:absolute;inset:0;z-index:0;overflow:hidden;">
-      <img src="https://images.unsplash.com/photo-1592919505780-303950717480?w=1600&q=80" alt="" style="width:100%;height:100%;object-fit:cover;object-position:center;opacity:0.07;"/>
+      <img src="images/golf_fairway.jpg" alt="" style="width:100%;height:100%;object-fit:cover;object-position:center;opacity:0.07;"/>
     </div>
     <div style="position:relative;z-index:1;">
       <div class="faq-header">
@@ -553,6 +558,7 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             email, firstName, lastName, dob,
+            postcode: document.getElementById('postcode').value.trim().toUpperCase(),
             frequency: document.getElementById('frequency').value,
             courses: Array.from(document.querySelectorAll('.courses-scroll input:checked')).map(cb => cb.value),
             comments: document.getElementById('comments').value,
